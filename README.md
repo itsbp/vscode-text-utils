@@ -4,7 +4,7 @@ TextUtils is a collection of Text utilities
 ## Features
 
     * Sort lines in selection in Ascending Order
-    * Sort lines in selection in Descendign Order
+    * Sort lines in selection in Descending Order
     * De-duplicate lines in selection
     * Convert selected text to Uppercase
     * Convert selected text to Lowercase
