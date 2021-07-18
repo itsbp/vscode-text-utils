@@ -11,6 +11,8 @@ TextUtils is a collection of Text utilities
     * Base64 Encode selected text
     * Base64 Decode selected text  
 
+Also, available for Jetbrains IDEs: https://plugins.jetbrains.com/plugin/17259-textutils
+
 <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 
 ## Known Issues
