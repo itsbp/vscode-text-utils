@@ -9,6 +9,7 @@
     "url": "https://github.com/itsbp/vscode-text-utils.git"
   },
   "publisher": "itsbp",
+  "license": "MPL 2.0",
   "engines": {
     "vscode": "^1.57.0"
   },
@@ -66,7 +67,8 @@
     "test-watch": "tsc -watch -p ./",
     "pretest": "npm run test-compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "deploy": "vsce publish --yarn"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",
