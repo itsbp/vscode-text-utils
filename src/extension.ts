@@ -1,135 +1,134 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+// extension.ts
+import * as vscode from "vscode";
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+let activeEditor: vscode.TextEditor | undefined;
+
 export function activate(context: vscode.ExtensionContext) {
-	let activeEditor = vscode.window.activeTextEditor;
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "text-utils" is now active!');
-	function getSelectedText () {
-		if (!activeEditor) {
-			console.warn("No active editor");
-			return;
-		}		
-		const document = activeEditor.document;
-		const selection = activeEditor.selection;
-		if (!selection) {
-			console.warn("No selection done in active editor");
-			return;
-		}
+  console.log('Congratulations, your extension "text-utils" is now active!');
 
-		// Get the word within the selection
-		return document.getText(selection);
-		
-	}
-	function replaceSelection(replaceWith:any) {
-		if (!activeEditor) {
-			console.warn("no active editor found when trying to replace selection");
-			return;
-		}
-		const selection = activeEditor.selection;
-		if (!selection) {
-			console.warn("no selection found");
-			return;
-		}
-		activeEditor.edit(editBuilder => {
-			editBuilder.replace(selection, replaceWith);
-		});
+  activeEditor = vscode.window.activeTextEditor;
+  context.subscriptions.push(
+    vscode.window.onDidChangeActiveTextEditor((editor) => {
+      activeEditor = editor;
+    })
+  );
 
-	}
-	let dedupCommand = vscode.commands.registerCommand('text-utils.dedup-lines-selection', () => {
-		const selectedLines = getSelectedText();
-		if (!selectedLines) {
-			vscode.window.showErrorMessage('No text selected!');
-			return;
-		}
-		const uniqueLines = [...new Set(selectedLines.split('\n'))].join('\n');
-		replaceSelection(uniqueLines);
-		vscode.window.showInformationMessage('Removed duplicates from the selection!');
-	});
-	let sortAscCommand = vscode.commands.registerCommand('text-utils.sort-lines-asc', () => {
-		const selectedLines = getSelectedText();
-		if (!selectedLines) {
-			vscode.window.showErrorMessage('No text selected!');
-			return;
-		}
-		const sortedText = selectedLines.split('\n').sort().join('\n');
-		replaceSelection(sortedText);
-		vscode.window.showInformationMessage('Selected lines sorted in Ascending order!');
-	});
-	let sortDescCommand = vscode.commands.registerCommand('text-utils.sort-lines-desc', () => {	
-		// Get the word within the selection
-		const selectedLines = getSelectedText();
-		if (!selectedLines) {
-			vscode.window.showErrorMessage('No text selected!');
-			return;
-		}
-		const reversed = selectedLines.split('\n').sort((one, two) => (one > two ? -1 : 1)).join('\n');
-		replaceSelection(reversed);
-		
-		vscode.window.showInformationMessage('Selected lines sorted in Ascending order!');
-	});
-
-	let toUpperCmd = vscode.commands.registerCommand('text-utils.convert-to-uppercase', () => {	
-		// Get the word within the selection
-		const selectedLines = getSelectedText();
-		if (!selectedLines) {
-			vscode.window.showErrorMessage('No text selected!');
-			return;
-		}
-		const upperCased = selectedLines.toLocaleUpperCase();
-		replaceSelection(upperCased);
-		
-		vscode.window.showInformationMessage('Converted to Uppercase');
-	});
-	let toLowerCmd = vscode.commands.registerCommand('text-utils.convert-to-lowercase', () => {	
-		// Get the word within the selection
-		const selectedLines = getSelectedText();
-		if (!selectedLines) {
-			vscode.window.showErrorMessage('No text selected!');
-			return;
-		}
-		const lowerCased = selectedLines.toLocaleLowerCase();
-		replaceSelection(lowerCased);
-		
-		vscode.window.showInformationMessage('Converted to Lowercase');
-	});
-
-	let base64EncodeCmd = vscode.commands.registerCommand('text-utils.base64-encode', () => {	
-		// Get the word within the selection
-		const selectedLines = getSelectedText();
-		if (!selectedLines) {
-			vscode.window.showErrorMessage('No text selected!');
-			return;
-		}
-		const coverted = Buffer.from(selectedLines, 'binary').toString('base64');
-		replaceSelection(coverted);
-		
-		vscode.window.showInformationMessage('Converted to Lowercase');
-	});
-	let base64DecodeCmd = vscode.commands.registerCommand('text-utils.base64-decode', () => {	
-		// Get the word within the selection
-		const selectedLines = getSelectedText();
-		if (!selectedLines) {
-			vscode.window.showErrorMessage('No text selected!');
-			return;
-		}
-		const coverted = Buffer.from(selectedLines, 'base64').toString('binary');
-		replaceSelection(coverted);
-	});
-	
-
-	context.subscriptions.push(dedupCommand);
-	context.subscriptions.push(sortAscCommand);
-	context.subscriptions.push(sortDescCommand);
-	context.subscriptions.push(toUpperCmd);
-	context.subscriptions.push(toLowerCmd);
-	context.subscriptions.push(base64EncodeCmd);
-	context.subscriptions.push(base64DecodeCmd);
+  registerCommands(context);
 }
 
-// this method is called when your extension is deactivated
+function registerCommands(context: vscode.ExtensionContext) {
+  const commands: [string, () => Promise<void>][] = [
+    ["text-utils.dedup-lines-selection", dedupLinesSelection],
+    ["text-utils.sort-lines-asc", sortLinesAsc],
+    ["text-utils.sort-lines-desc", sortLinesDesc],
+    ["text-utils.convert-to-uppercase", convertToUppercase],
+    ["text-utils.convert-to-lowercase", convertToLowercase],
+    ["text-utils.base64-encode", base64Encode],
+    ["text-utils.base64-decode", base64Decode],
+    ["text-utils.remove-empty-lines", removeEmptyLines],
+  ];
+
+  commands.forEach(([id, handler]) => {
+    const disposable = vscode.commands.registerCommand(id, handler);
+    context.subscriptions.push(disposable);
+  });
+}
+
+function getSelectedText(): string | undefined {
+  if (!activeEditor) {
+    vscode.window.showWarningMessage("No active editor");
+    return;
+  }
+  const selection = activeEditor.selection;
+  return activeEditor.document.getText(selection);
+}
+
+async function replaceSelection(replaceWith: string): Promise<boolean> {
+  if (!activeEditor) {
+    vscode.window.showWarningMessage("No active editor");
+    return false;
+  }
+  const selection = activeEditor.selection;
+  return activeEditor.edit((editBuilder) => {
+    editBuilder.replace(selection, replaceWith);
+  });
+}
+
+async function executeCommand(
+  operation: (text: string) => string,
+  successMessage: string
+): Promise<void> {
+  const selectedText = getSelectedText();
+  if (!selectedText) {
+    vscode.window.showErrorMessage("No text selected!");
+    return;
+  }
+  const result = operation(selectedText);
+  const success = await replaceSelection(result);
+  if (success) {
+    vscode.window.showInformationMessage(successMessage);
+  }
+}
+
+// Command handlers
+async function dedupLinesSelection(): Promise<void> {
+  await executeCommand(
+    (text) => [...new Set(text.split("\n"))].join("\n"),
+    "Removed duplicates from the selection!"
+  );
+}
+
+async function sortLinesAsc(): Promise<void> {
+  await executeCommand(
+    (text) => text.trim().split("\n").sort().join("\n"),
+    "Selected lines sorted in Ascending order!"
+  );
+}
+
+async function sortLinesDesc(): Promise<void> {
+  await executeCommand(
+    (text) =>
+      text
+        .split("\n")
+        .sort((a, b) => b.localeCompare(a))
+        .join("\n"),
+    "Selected lines sorted in Descending order!"
+  );
+}
+
+async function convertToUppercase(): Promise<void> {
+  await executeCommand(
+    (text) => text.toLocaleUpperCase(),
+    "Converted to Uppercase"
+  );
+}
+
+async function convertToLowercase(): Promise<void> {
+  await executeCommand(
+    (text) => text.toLocaleLowerCase(),
+    "Converted to Lowercase"
+  );
+}
+
+async function base64Encode(): Promise<void> {
+  await executeCommand(
+    (text) => Buffer.from(text, "binary").toString("base64"),
+    "Converted to Base64"
+  );
+}
+
+async function base64Decode(): Promise<void> {
+  await executeCommand(
+    (text) => Buffer.from(text, "base64").toString("binary"),
+    "Decoded from Base64"
+  );
+}
+
+async function removeEmptyLines(): Promise<void> {
+  await executeCommand(
+    (text) => text.replace(/^\s*\n/gm, ""),
+    "Removed empty lines"
+  );
+}
+
 export function deactivate() {}

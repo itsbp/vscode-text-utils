@@ -23,38 +23,92 @@
     "onCommand:text-utils.convert-to-uppercase",
     "onCommand:text-utils.convert-to-lowercase",
     "onCommand:text-utils.base64-encode",
-    "onCommand:text-utils.base64-decode"
+    "onCommand:text-utils.base64-decode",
+    "onCommand:text-utils.remove-empty-lines"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "text-utils.dedup-lines-selection",
-        "title": "TextUtils: Dedup lines in selection"
+        "title": "Dedup lines in selection"
       },
       {
         "command": "text-utils.sort-lines-asc",
-        "title": "TextUtils: Sort selected lines in Ascending order"
+        "title": "Sort selected lines in Ascending order"
       },
       {
         "command": "text-utils.sort-lines-desc",
-        "title": "TextUtils: Sort selected lines in Descending order"
+        "title": "Sort selected lines in Descending order"
       },
       {
         "command": "text-utils.convert-to-uppercase",
-        "title": "TextUtils: Uppercase selection"
+        "title": "Uppercase selection"
       },
       {
         "command": "text-utils.convert-to-lowercase",
-        "title": "TextUtils: Lowercase selection"
+        "title": "Lowercase selection"
       },
       {
         "command": "text-utils.base64-encode",
-        "title": "TextUtils: Base64 Encode"
+        "title": "Base64 Encode"
       },
       {
         "command": "text-utils.base64-decode",
-        "title": "TextUtils: Base64 Decode"
+        "title": "Base64 Decode"
+      },
+      {
+        "command": "text-utils.remove-empty-lines",
+        "title": "Remove empty lines"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "submenu": "textUtils",
+          "when": "editorTextFocus",
+          "group": "1_modification"
+        }
+      ],
+      "textUtils": [
+        {
+          "command": "text-utils.dedup-lines-selection",
+          "group": "1_modification"
+        },
+        {
+          "command": "text-utils.sort-lines-asc",
+          "group": "1_modification"
+        },
+        {
+          "command": "text-utils.sort-lines-desc",
+          "group": "1_modification"
+        },
+        {
+          "command": "text-utils.convert-to-uppercase",
+          "group": "1_modification"
+        },
+        {
+          "command": "text-utils.convert-to-lowercase",
+          "group": "1_modification"
+        },
+        {
+          "command": "text-utils.base64-encode",
+          "group": "1_modification"
+        },
+        {
+          "command": "text-utils.base64-decode",
+          "group": "1_modification"
+        },
+        {
+          "command": "text-utils.remove-empty-lines",
+          "group": "1_modification"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "textUtils",
+        "label": "TextUtils"
       }
     ]
   },
@@ -67,25 +121,28 @@
     "test-watch": "tsc -watch -p ./",
     "pretest": "npm run test-compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js",
+    "test": "vscode-test",
     "deploy": "vsce publish --yarn"
   },
   "devDependencies": {
-    "@types/glob": "^7.1.3",
-    "@types/mocha": "^8.2.2",
-    "@types/node": "14.x",
-    "@types/vscode": "^1.57.0",
-    "@typescript-eslint/eslint-plugin": "^4.26.0",
-    "@typescript-eslint/parser": "^4.26.0",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.13.8",
+    "@types/vscode": "^1.97.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
     "@vscode/vsce": "^2.16.0",
-    "copy-webpack-plugin": "^9.0.1",
+    "copy-webpack-plugin": "^9.1.0",
     "eslint": "^7.27.0",
-    "glob": "^7.1.7",
-    "mocha": "^10.2.0",
-    "ts-loader": "^9.2.2",
-    "typescript": "^4.3.2",
-    "vscode-test": "^1.5.2",
-    "webpack": "^5.38.1",
-    "webpack-cli": "^4.7.0"
+    "glob": "^11.0.1",
+    "mocha": "^11.1.0",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2",
+    "vscode-test": "^1.6.1",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1"
   }
 }
