@@ -10,6 +10,7 @@ TextUtils is a collection of Text utilities
     * Convert selected text to Lowercase
     * Base64 Encode selected text
     * Base64 Decode selected text  
+    * Remove empty lines
 
 Also, available for Jetbrains IDEs: https://plugins.jetbrains.com/plugin/17259-textutils
 
