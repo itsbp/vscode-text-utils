@@ -1,14 +1,16 @@
-# Change Log
-
-All notable changes to the "text-utils" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-### Added
-
-- v0.1.5 New 'Remove Empty lines" command
-- v0.1.5 Context Menu for TextUtils commands
+# Changelog
 
 ## [Unreleased]
-
-- Initial release
+### Added
+- Sort lines in ascending order
+- Dedup lines in selection
+- Sort lines in descending order
+- Remove empty lines in selection
+- Convert to uppercase
+- Convert to lowercase
+- Base64 encode
+- Base64 decode
+- HTML Entity Encode
+- HTML Entity Decode
+- YAML to JSON
+- JSON to YAML
