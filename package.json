@@ -24,7 +24,9 @@
     "onCommand:text-utils.convert-to-lowercase",
     "onCommand:text-utils.base64-encode",
     "onCommand:text-utils.base64-decode",
-    "onCommand:text-utils.remove-empty-lines"
+    "onCommand:text-utils.remove-empty-lines",
+    "onCommand:text-utils.html-entity-encode",
+    "onCommand:text-utils.html-entity-decode"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -60,6 +62,14 @@
       {
         "command": "text-utils.remove-empty-lines",
         "title": "Remove empty lines"
+      },
+      {
+        "command": "text-utils.html-entity-encode",
+        "title": "HTML Entity Encode"
+      },
+      {
+        "command": "text-utils.html-entity-decode",
+        "title": "HTML Entity Decode"
       }
     ],
     "menus": {
@@ -102,6 +112,14 @@
         {
           "command": "text-utils.remove-empty-lines",
           "group": "1_modification"
+        },
+        {
+          "command": "text-utils.html-entity-encode",
+          "group": "1_modification"
+        },
+        {
+          "command": "text-utils.html-entity-decode",
+          "group": "1_modification"
         }
       ]
     },
@@ -143,6 +161,7 @@
     "typescript": "^5.8.2",
     "vscode-test": "^1.6.1",
     "webpack": "^5.98.0",
-    "webpack-cli": "^6.0.1"
+    "webpack-cli": "^6.0.1",
+    "html-entities": "^2.3.3"
   }
 }

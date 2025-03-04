@@ -78,6 +78,18 @@ suite("Extension Test Suite", () => {
       command: "text-utils.base64-decode",
       expected: "hello\nworld\n",
     },
+    {
+      name: "HTML Entity Encode",
+      input: "<div>Hello & World</div>",
+      command: "text-utils.html-entity-encode",
+      expected: "&lt;div&gt;Hello &amp; World&lt;/div&gt;",
+    },
+    {
+      name: "HTML Entity Decode",
+      input: "&lt;div&gt;Hello &amp; World&lt;/div&gt;",
+      command: "text-utils.html-entity-decode",
+      expected: "<div>Hello & World</div>",
+    },
   ];
 
   testCases.forEach(({ name, input, command, expected }) => {
