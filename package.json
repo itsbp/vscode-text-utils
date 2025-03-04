@@ -2,7 +2,7 @@
   "name": "text-utils",
   "displayName": "Text Utils",
   "description": "A collection of text utilities for Visual Studio Code.",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "icon": "images/text-utils-icon.png",
   "repository": {
     "type": "git",
