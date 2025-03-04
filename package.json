@@ -11,7 +11,7 @@
   "publisher": "itsbp",
   "license": "MPL 2.0",
   "engines": {
-    "vscode": "^1.57.0"
+    "vscode": "^1.97.0"
   },
   "categories": [
     "Other"
