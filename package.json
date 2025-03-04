@@ -9,7 +9,7 @@
     "url": "https://github.com/itsbp/vscode-text-utils.git"
   },
   "publisher": "itsbp",
-  "license": "MPL 2.0",
+  "license": "MPL-2.0",
   "engines": {
     "vscode": "^1.97.0"
   },
