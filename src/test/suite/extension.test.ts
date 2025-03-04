@@ -78,6 +78,30 @@ suite("Extension Test Suite", () => {
       command: "text-utils.base64-decode",
       expected: "hello\nworld\n",
     },
+    {
+      name: "HTML Entity Encode",
+      input: "<div>Hello & World</div>",
+      command: "text-utils.html-entity-encode",
+      expected: "&lt;div&gt;Hello &amp; World&lt;/div&gt;",
+    },
+    {
+      name: "HTML Entity Decode",
+      input: "&lt;div&gt;Hello &amp; World&lt;/div&gt;",
+      command: "text-utils.html-entity-decode",
+      expected: "<div>Hello & World</div>",
+    },
+    {
+      name: "YAML to JSON",
+      input: "name: John Doe\nage: 30\n",
+      command: "text-utils.yaml-to-json",
+      expected: '{\n  "name": "John Doe",\n  "age": 30\n}',
+    },
+    {
+      name: "JSON to YAML",
+      input: '{\n  "name": "John Doe",\n  "age": 30\n}',
+      command: "text-utils.json-to-yaml",
+      expected: "name: John Doe\nage: 30\n",
+    },
   ];
 
   testCases.forEach(({ name, input, command, expected }) => {

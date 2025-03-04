@@ -1,8 +1,8 @@
 {
   "name": "text-utils",
   "displayName": "Text Utils",
-  "description": "Collection of various text utilities. Sort, Remove duplicates, Uppercase, Lowercase, Base64 encode, Base64 decode",
-  "version": "0.1.3",
+  "description": "A collection of text utilities for Visual Studio Code.",
+  "version": "0.1.6",
   "icon": "images/text-utils-icon.png",
   "repository": {
     "type": "git",
@@ -24,30 +24,34 @@
     "onCommand:text-utils.convert-to-lowercase",
     "onCommand:text-utils.base64-encode",
     "onCommand:text-utils.base64-decode",
-    "onCommand:text-utils.remove-empty-lines"
+    "onCommand:text-utils.remove-empty-lines",
+    "onCommand:text-utils.html-entity-encode",
+    "onCommand:text-utils.html-entity-decode",
+    "onCommand:text-utils.yaml-to-json",
+    "onCommand:text-utils.json-to-yaml"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "text-utils.dedup-lines-selection",
-        "title": "Dedup lines in selection"
+        "title": "Dedup Lines in Selection"
       },
       {
         "command": "text-utils.sort-lines-asc",
-        "title": "Sort selected lines in Ascending order"
+        "title": "Sort Lines Ascending"
       },
       {
         "command": "text-utils.sort-lines-desc",
-        "title": "Sort selected lines in Descending order"
+        "title": "Sort Lines Descending"
       },
       {
         "command": "text-utils.convert-to-uppercase",
-        "title": "Uppercase selection"
+        "title": "Convert to Uppercase"
       },
       {
         "command": "text-utils.convert-to-lowercase",
-        "title": "Lowercase selection"
+        "title": "Convert to Lowercase"
       },
       {
         "command": "text-utils.base64-encode",
@@ -59,7 +63,23 @@
       },
       {
         "command": "text-utils.remove-empty-lines",
-        "title": "Remove empty lines"
+        "title": "Remove Empty Lines in Selection"
+      },
+      {
+        "command": "text-utils.html-entity-encode",
+        "title": "HTML Entity Encode"
+      },
+      {
+        "command": "text-utils.html-entity-decode",
+        "title": "HTML Entity Decode"
+      },
+      {
+        "command": "text-utils.yaml-to-json",
+        "title": "YAML to JSON"
+      },
+      {
+        "command": "text-utils.json-to-yaml",
+        "title": "JSON to YAML"
       }
     ],
     "menus": {
@@ -102,6 +122,22 @@
         {
           "command": "text-utils.remove-empty-lines",
           "group": "1_modification"
+        },
+        {
+          "command": "text-utils.html-entity-encode",
+          "group": "1_modification"
+        },
+        {
+          "command": "text-utils.html-entity-decode",
+          "group": "1_modification"
+        },
+        {
+          "command": "text-utils.yaml-to-json",
+          "group": "1_modification"
+        },
+        {
+          "command": "text-utils.json-to-yaml",
+          "group": "1_modification"
         }
       ]
     },
@@ -126,6 +162,7 @@
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
+    "@types/js-yaml": "^4.0.9",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.13.8",
     "@types/vscode": "^1.97.0",
@@ -137,6 +174,8 @@
     "copy-webpack-plugin": "^9.1.0",
     "eslint": "^7.27.0",
     "glob": "^11.0.1",
+    "html-entities": "^2.3.3",
+    "js-yaml": "^4.1.0",
     "mocha": "^11.1.0",
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",

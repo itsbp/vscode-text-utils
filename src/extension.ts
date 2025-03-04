@@ -1,5 +1,6 @@
-// extension.ts
 import * as vscode from "vscode";
+import { encode as htmlEncode, decode as htmlDecode } from "html-entities";
+import * as yaml from "js-yaml";
 
 let activeEditor: vscode.TextEditor | undefined;
 
@@ -26,6 +27,10 @@ function registerCommands(context: vscode.ExtensionContext) {
     ["text-utils.base64-encode", base64Encode],
     ["text-utils.base64-decode", base64Decode],
     ["text-utils.remove-empty-lines", removeEmptyLines],
+    ["text-utils.html-entity-encode", htmlEntityEncode],
+    ["text-utils.html-entity-decode", htmlEntityDecode],
+    ["text-utils.yaml-to-json", yamlToJson],
+    ["text-utils.json-to-yaml", jsonToYaml],
   ];
 
   commands.forEach(([id, handler]) => {
@@ -128,6 +133,34 @@ async function removeEmptyLines(): Promise<void> {
   await executeCommand(
     (text) => text.replace(/^\s*\n/gm, ""),
     "Removed empty lines"
+  );
+}
+
+async function htmlEntityEncode(): Promise<void> {
+  await executeCommand(
+    (text) => htmlEncode(text),
+    "Converted to HTML Entities"
+  );
+}
+
+async function htmlEntityDecode(): Promise<void> {
+  await executeCommand(
+    (text) => htmlDecode(text),
+    "Decoded from HTML Entities"
+  );
+}
+
+async function yamlToJson(): Promise<void> {
+  await executeCommand(
+    (text) => JSON.stringify(yaml.load(text), null, 2),
+    "Converted YAML to JSON"
+  );
+}
+
+async function jsonToYaml(): Promise<void> {
+  await executeCommand(
+    (text) => yaml.dump(JSON.parse(text)),
+    "Converted JSON to YAML"
   );
 }
 
