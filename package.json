@@ -2,7 +2,7 @@
   "name": "text-utils",
   "displayName": "Text Utils",
   "description": "A collection of text utilities for Visual Studio Code.",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "icon": "images/text-utils-icon.png",
   "repository": {
     "type": "git",
@@ -11,7 +11,7 @@
   "publisher": "itsbp",
   "license": "MPL-2.0",
   "engines": {
-    "vscode": "^1.97.0"
+    "vscode": "^1.57.0"
   },
   "categories": [
     "Other"
