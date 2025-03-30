@@ -11,7 +11,7 @@
   "publisher": "itsbp",
   "license": "MPL-2.0",
   "engines": {
-    "vscode": "^1.57.0"
+    "vscode": "^1.80.0"
   },
   "categories": [
     "Other"
@@ -177,7 +177,7 @@
     "@types/js-yaml": "^4.0.9",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.13.8",
-    "@types/vscode": "^1.97.0",
+    "@types/vscode": "^1.80.0",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",
     "@vscode/test-cli": "^0.0.10",
